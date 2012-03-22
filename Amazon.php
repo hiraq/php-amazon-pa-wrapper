@@ -11,6 +11,7 @@ namespace AmazonProductAdvertising;
 use AmazonProductAdvertising\Amazon\Exception as Amazon_Exception;
 use AmazonProductAdvertising\Amazon\Request as Amazon_Request;
 use AmazonProductAdvertising\Amazon\Response as Amazon_Response;
+use AmazonProductAdvertising\Amazon\Request\Search as Amazon_Search;
 
 final class Amazon {
     /**
@@ -130,15 +131,24 @@ final class Amazon {
 
         if (strstr($classname, '\\')) {
 
-            $exp_name = explode('\\', $classname);
+            $exp_name = explode('\\', $classname);            
+            
             $top_namespace = current($exp_name);
-            $sub_namespace = next($exp_name);
-
+            $sub_namespace = next($exp_name);    
+            $sub_folder = next($exp_name);
+            
             $exp_class = explode('_', end($exp_name));
             $class_namespace = end($exp_class);
 
             if ('AmazonProductAdvertising' == $top_namespace && 'Amazon' == $sub_namespace) {
-                require_once $sub_namespace . '/' . $class_namespace . '.php';
+                                
+                if( $class_namespace == $sub_folder ) {
+                    $filepath = $sub_namespace.'/'.$class_namespace.'.php';
+                }else{
+                    $filepath = $sub_namespace.'/'.$sub_folder.'/'.$class_namespace.'.php';
+                }
+                                            
+                require_once $filepath;
             }
         }
     }
@@ -164,19 +174,45 @@ final class Amazon {
      * Set new endpoint url
      * 
      * @param string $endpoint 
-     * @return void
+     * @return void|object
      */
     public function setEndPoint($endpoint) {
         $this->_endpoint_url = $endpoint;
     }
+    
+    public function getEndPoint() {
+        return $this->_endpoint_url;
+    }
+    
+    public function getAwsKey() {
+        return $this->_aws_key;
+    }
+    
+    public function getSecretKey() {
+        return $this->_secret_key;
+    }
+    
+    public function getTagKey() {
+        return $this->_tag_key;
+    }
 
+    /**
+     * Set request
+     * 
+     * @access public
+     * @return object
+     * @throws Amazon_Exception 
+     */
     public function request() {
 
         if (empty($this->_aws_key) || empty($this->_secret_key) || empty($this->_tag_key)) {
             throw new Amazon_Exception('You must set your amazon aws,secret key and your associate tag.');
         } else {
             
+            $request = Amazon_Request::getInstance();
+            $request->setAmazon($this);
             
+            return $request;
             
         }
     }
