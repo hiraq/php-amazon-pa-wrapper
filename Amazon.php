@@ -7,7 +7,12 @@ namespace Amazon {
         /**
          * Amazon Product Advertising API version
          */
-        const VERSION = '2011-08-01';
+        const VERSION_AMAZON = '2011-08-01';
+        
+        /**
+         * Library version 
+         */
+        const VERSION_LIB = '1.0';
         
         /**
          *
