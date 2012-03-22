@@ -15,6 +15,7 @@ final class Request {
     private $_amazon = null;
     
     private $_operation;
+    private $_search_index;
     private $_keyword;
     private $_asin;
     
@@ -46,13 +47,14 @@ final class Request {
      * @access public
      * @param string $keyword 
      */
-    public function search( $keyword ) {
+    public function search( $keyword, $search_index ) {
         
         $keyword = trim($keyword);
         
         if( !empty($keyword) ) {
             $this->_operation = 'search';
             $this->_keyword = $keyword;
+            $this->_search_index = $search_index;
         }
         
     }
@@ -87,6 +89,7 @@ final class Request {
                 case 'Amazon_Request_Search':
                     $data = $this->_keyword;
                     $classObj = Amazon_Request_Search::getInstance();
+                    $classObj->setIndex($this->_search_index);
                     break;
                 
                 case 'Amazon_Request_Lookup':

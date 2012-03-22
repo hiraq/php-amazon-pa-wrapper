@@ -13,6 +13,7 @@ final class Search {
     private $_signature;
     private $_amazon;
     private $_data;
+    private $_index;
     private $_url;
     
     private function __construct() {}
@@ -38,6 +39,15 @@ final class Search {
         
     }
     
+    public function setIndex( $index ) {
+        
+        $index = trim($index);
+        if( !empty($index) ) {
+            $this->_index = $index;
+        }
+        
+    }
+    
     public function setData( $data ) {
         
         $data = trim($data);
@@ -56,6 +66,7 @@ final class Search {
             'Operation' => 'ItemSearch',
             'Timestamp' => gmdate("Y-m-d\TH:i:s\Z"), 
             'Keywords' => $this->_data,
+            'SearchIndex' => $this->_index,
             'Version' => Amazon::VERSION_AMAZON,
             'endpoint' => $this->_amazon->getEndPoint(),
             'secret_key' => $this->_amazon->getSecretKey()
