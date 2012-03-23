@@ -33,6 +33,14 @@ final class Response {
      */
     private function __construct() {}
     
+    /**
+     *
+     * Create Response object
+     * 
+     * @access public
+     * @return object
+     * @static
+     */
     static public function getInstance() {
         
         if( is_null(self::$_obj) ) {
@@ -43,6 +51,14 @@ final class Response {
         
     }
     
+    /**
+     *
+     * Proceed request to get response data
+     * 
+     * @access public
+     * @param string $url
+     * @throws Amazon_Exception 
+     */
     public function proceed( $url ) {
         
         if( filter_var($url,FILTER_VALIDATE_URL) ) {
@@ -59,6 +75,25 @@ final class Response {
         
     }
     
+    /**
+     *
+     * Get raw xml content data
+     * 
+     * @access public
+     * @return SimpleXMLElement object
+     */
+    public function getRawXml() {
+        return $this->_raw;
+    }
+    
+    /**
+     *
+     * Get operation headers data
+     * 
+     * @access public
+     * @return array
+     * @throws Amazon_Exception 
+     */
     public function getOperationHeaders() {
         
         if( !empty($this->_raw) && $this->_raw instanceof \SimpleXMLElement ) {
@@ -96,6 +131,79 @@ final class Response {
             
             return $headers;
             
+        }else{
+            throw new Amazon_Exception('Returning response not a valid xml document.');
+        }
+        
+    }
+    
+    /**
+     *
+     * Get all errors message type and content
+     * 
+     * @access public
+     * @return array
+     * @throws Amazon_Exception 
+     */
+    public function getErrors() {
+        
+        if( !empty($this->_raw) && $this->_raw instanceof \SimpleXMLElement) {
+            
+            $errors = array();            
+            $arguments = function($args){
+                
+                $return = array();
+                foreach($args->Error as $arg_key => $arg_val) {
+                    
+                    $key_index = '';
+                    $val_value = '';
+                    
+                    foreach($arg_val as $key => $val) {
+                        
+                        if($key == 'Code') {
+                            $key_index = (string) $val;
+                        }
+                        
+                        $val_value = (string) $val;
+                    }
+                    
+                    $return[$key_index] = $val_value;
+                    
+                }
+                
+                return $return;
+                
+            };
+            
+            $errors = array(
+                'Errors' => $arguments($this->_raw->Items->Request->Errors)
+            );
+            
+            return $errors;
+            
+        }else{
+            throw new Amazon_Exception('Returning response not a valid xml document.');
+        }
+        
+    }
+    
+    /**
+     *
+     * Check if request is valid or not
+     * 
+     * @access public
+     * @return boolean
+     * @throws Amazon_Exception 
+     */
+    public function isRequestValid() {
+        
+        if( !empty($this->_raw) && $this->_raw instanceof \SimpleXMLElement) {
+            
+            $check_valid = (string) $this->_raw->Items->Request->IsValid;
+            return $check_valid == 'True' ? true : false;
+            
+        }else{
+            throw new Amazon_Exception('Returning response not a valid xml document.');
         }
         
     }
