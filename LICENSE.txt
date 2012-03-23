@@ -1,4 +1,4 @@
-Amazon Product Advertising API  - PHP Library
+PHP AMAZON PRODUCT ADVERTISING WRAPPER
 Copyright (c) 2012, Hiraq Citra Mahardika, hrxwan@gmail.com
 All rights reserved.
 

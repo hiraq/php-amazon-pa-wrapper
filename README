@@ -1,3 +1,11 @@
-PHP AMAZON PRODUCT ADVERTISING WRAPPER [ONPROGRESS]
+PHP AMAZON PRODUCT ADVERTISING WRAPPER
 
-A php library class to working with Amazon Product Advertising API
+A php library class to working with Amazon Product Advertising API.
+
+Using latest version of Amazon Product Advertising API (2011-08-01).
+
+Requirement :
+
+- php 5.3 (min!)
+- hash_hmac (to create signature)
+- new SimpleXMLElement must be exists
