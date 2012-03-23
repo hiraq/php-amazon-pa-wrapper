@@ -1,19 +1,11 @@
 <?php
 
 namespace AmazonProductAdvertising\Amazon\Request;
+use AmazonProductAdvertising\Amazon\Request\Base as Amazon_Request_Base;
 
-use AmazonProductAdvertising\Amazon\Signature as Amazon_Signature;
-use AmazonProductAdvertising\Amazon\Exception as Amazon_Exception;
-use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
-
-final class Search {
+final class Search extends Amazon_Request_Base {
     
-    static private $_obj = null;
-    
-    private $_signature;
-    private $_amazon;
-    private $_data;        
-    private $_param;
+    static private $_obj = null;            
     
     private function __construct() {}
     
@@ -25,20 +17,7 @@ final class Search {
         
         return self::$_obj;
         
-    }                
-    
-    public function setData( $data ) {
-        
-        $data = trim($data);
-        if( !empty($data) ) {
-            $this->_data = $data;
-        }
-        
-    }
-    
-    public function setSignature(Amazon_Signature $signature) {
-        $this->_signature = $signature;
-    }
+    }                        
     
     public function build() {                
         
