@@ -2,6 +2,10 @@
 
 namespace AmazonProductAdvertising\Amazon;
 
+/*
+ * import and aliasing for :
+ * - Exception
+ */
 use AmazonProductAdvertising\Amazon\Exception as Amazon_Exception;
 
 /**
