@@ -9,3 +9,16 @@ Requirement :
 - php 5.3 (min!)
 - hash_hmac (to create signature)
 - new SimpleXMLElement must be exists
+
+Features :
+
+- Search Operation
+- ItemLookup Operation
+
+Todo :
+
+- Power Search ?
+- Batch Request ?
+- Plugins ? (including feeds) ?
+
+How To Use : https://gist.github.com/2171638
