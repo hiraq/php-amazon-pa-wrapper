@@ -68,7 +68,7 @@ final class Request {
      * Amazon_Request_Param object
      * @var object
      */
-    private $_params;
+    private $_params;        
     
     /**
      * Denied object instantiation
@@ -201,9 +201,9 @@ final class Request {
             $classObj->setSignature($signature);
             
             $url = $classObj->build();
-            echo $url;
+            return $url;
         }
         
-    }
+    }        
     
 }

@@ -252,5 +252,12 @@ final class Amazon {
             
         }
     }
+    
+    public function response() {
+        
+        $response = Amazon_Response::getInstance();
+        return $response;
+        
+    }
 
 }
