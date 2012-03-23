@@ -26,13 +26,19 @@ final class Param {
     public function setParams( $params ) {
         
         if( is_array($params) && !empty($params) ) {
-            $this->_params = $params;
+            
+            if( !empty($this->_params) && is_array($this->_params) ) {
+                $this->_params = array_merge($this->_params,$params);
+            }else{
+                $this->_params = $params;
+            }
+            
         }
         
     }
     
     public function getParams() {
         return $this->_params;
-    }
+    }        
     
 }

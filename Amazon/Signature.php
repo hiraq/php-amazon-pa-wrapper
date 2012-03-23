@@ -2,9 +2,16 @@
 
 namespace AmazonProductAdvertising\Amazon;
 
+use AmazonProductAdvertising\Amazon as Amazon;
+use AmazonProductAdvertising\Amazon\Exception as Amazon_Exception;
+use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
+
 final class Signature {
     
     static private $_obj = null;
+    
+    private $_amazon;
+    private $_param;
     
     private function __construct() {}
     
@@ -18,7 +25,30 @@ final class Signature {
         
     }
     
-    public function create( $params ) {
+    public function init(Amazon $amazon,Amazon_Request_Param $param) {
+        
+        if( $amazon instanceof Amazon && $param instanceof Amazon_Request_Param ) {            
+            $this->_amazon = $amazon;
+            $this->_param = $param;
+        }else{
+            throw new Amazon_Exception('You must Amazon & Amazon_Request_Param object to build a query.');
+        }
+        
+    }
+    
+    public function create( $params ) {      
+        
+        $this->_param->setParams(array(
+            'AWSAccessKeyId' => $this->_amazon->getAwsKey(),            
+            'AssociateTag' => $this->_amazon->getTagKey(),
+            'Service' => 'AWSECommerceService',            
+            'Timestamp' => gmdate("Y-m-d\TH:i:s\Z"),                 
+            'Version' => Amazon::VERSION_AMAZON,
+            'endpoint' => $this->_amazon->getEndPoint(),
+            'secret_key' => $this->_amazon->getSecretKey()
+        ));
+        
+        $params = array_merge($params,$this->_param->getParams());        
         
         $method = 'GET';
         $parse_url = parse_url($params['endpoint']);
@@ -50,6 +80,8 @@ final class Signature {
             $request = $parse_url['scheme'].'://'.$host.$uri.'?'.$canonicalized_query.'&Signature='.$signature;
             return $request;
             
+        }else{
+            throw new Amazon_Exception('Your endpoint url is not valid.');
         }                
         
     }

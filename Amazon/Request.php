@@ -107,10 +107,11 @@ final class Request {
                 
             }
             
-            $signature = Amazon_Signature::getInstance();
-                        
-            $classObj->createSignature($signature,$this->_amazon,$this->_params);
+            $signature = Amazon_Signature::getInstance();                        
+            $signature->init($this->_amazon,$this->_params);
+            
             $classObj->setData($data);
+            $classObj->setSignature($signature);
             
             $url = $classObj->build();
             echo $url;
