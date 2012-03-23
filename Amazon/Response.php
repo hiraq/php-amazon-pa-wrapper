@@ -114,6 +114,39 @@ final class Response {
     
     /**
      *
+     * Get all item data based on your requested response group
+     * 
+     * @access public
+     * @return array
+     */
+    public function getItems() {
+        
+        $items = array();
+        if( count($this->_raw->Items->Item) > 0 ) {
+            
+            foreach($this->_raw->Items->Item as $item) {
+                
+                if($item instanceof \SimpleXMLElement) {
+                    
+                    $item_data = '';
+                    foreach($item->children() as $child) {
+                        $item_data[$child->getName()] = $item->{$child->getName()};
+                    }
+                    
+                    $items[] = $item_data;
+                    
+                }
+                
+            }
+            
+        }
+        
+        return $items;
+        
+    }
+    
+    /**
+     *
      * Get more search results
      * 
      * @access public
