@@ -48,7 +48,7 @@ final class Signature {
             $signature = str_replace("%7E", "~", rawurlencode($signature));
             
             $request = $parse_url['scheme'].'://'.$host.$uri.'?'.$canonicalized_query.'&Signature='.$signature;
-            echo $request;
+            return $request;
             
         }                
         

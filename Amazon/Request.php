@@ -7,6 +7,7 @@ use AmazonProductAdvertising\Amazon\Signature as Amazon_Signature;
 use AmazonProductAdvertising\Amazon\Exception as Amazon_Exception;
 use AmazonProductAdvertising\Amazon\Request\Search as Amazon_Request_Search;
 use AmazonProductAdvertising\Amazon\Request\Lookup as Amazon_Request_Lookup;
+use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
 
 final class Request {
     
@@ -14,10 +15,10 @@ final class Request {
     
     private $_amazon = null;
     
-    private $_operation;
-    private $_search_index;
+    private $_operation;    
     private $_keyword;
     private $_asin;
+    private $_params;
     
     private function __construct() {}
     
@@ -41,20 +42,28 @@ final class Request {
         
     }
     
+    public function setParams( $params ) {
+        
+        $param = Amazon_Request_Param::getInstance();
+        $param->setParams($params);
+        
+        $this->_params = $param;
+        
+    }
+    
     /**
      * Search item in amazon
      * 
      * @access public
      * @param string $keyword 
      */
-    public function search( $keyword, $search_index ) {
+    public function search( $keyword) {
         
         $keyword = trim($keyword);
         
         if( !empty($keyword) ) {
             $this->_operation = 'search';
-            $this->_keyword = $keyword;
-            $this->_search_index = $search_index;
+            $this->_keyword = $keyword;            
         }
         
     }
@@ -88,8 +97,7 @@ final class Request {
                 
                 case 'Amazon_Request_Search':
                     $data = $this->_keyword;
-                    $classObj = Amazon_Request_Search::getInstance();
-                    $classObj->setIndex($this->_search_index);
+                    $classObj = Amazon_Request_Search::getInstance();                    
                     break;
                 
                 case 'Amazon_Request_Lookup':
@@ -101,11 +109,11 @@ final class Request {
             
             $signature = Amazon_Signature::getInstance();
                         
-            $classObj->createSignature($signature,$this->_amazon);
+            $classObj->createSignature($signature,$this->_amazon,$this->_params);
             $classObj->setData($data);
             
             $url = $classObj->build();
-            debug($url);
+            echo $url;
         }
         
     }
