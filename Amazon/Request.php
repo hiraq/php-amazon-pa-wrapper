@@ -2,6 +2,14 @@
 
 namespace AmazonProductAdvertising\Amazon;
 
+/*
+ * import and aliasing for :
+ * - Amazon
+ * - Signature
+ * - Search
+ * - Lookup
+ * - Param
+ */
 use AmazonProductAdvertising\Amazon as Amazon;
 use AmazonProductAdvertising\Amazon\Signature as Amazon_Signature;
 use AmazonProductAdvertising\Amazon\Exception as Amazon_Exception;
@@ -9,6 +17,15 @@ use AmazonProductAdvertising\Amazon\Request\Search as Amazon_Request_Search;
 use AmazonProductAdvertising\Amazon\Request\Lookup as Amazon_Request_Lookup;
 use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
 
+/**
+ * @author Hiraq
+ * @link https://github.com/hiraq/php-amazon-pa-wrapper
+ * @package AmazonProductAdvertising
+ * @subpackage Amazon
+ * @name Request
+ * @version 1.0
+ * @final 
+ */
 final class Request {
     
     /**

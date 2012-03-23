@@ -17,6 +17,7 @@ use AmazonProductAdvertising\Amazon\Request\Search as Amazon_Search;
  * @author Hiraq
  * @link https://github.com/hiraq/php-amazon-pa-wrapper
  * @package AmazonProductAdvertising
+ * @name Amazon
  * @version 1.0
  * @final 
  */
