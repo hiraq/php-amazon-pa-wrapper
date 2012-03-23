@@ -92,6 +92,39 @@ final class Response {
     
     /**
      *
+     * Get total results
+     * 
+     * @access public
+     * @return int
+     */
+    public function getTotalResults() {
+        return (int) $this->_raw->Items->TotalResults - 1;
+    }
+    
+    /**
+     *
+     * Get total pages
+     * 
+     * @access public
+     * @return int
+     */
+    public function getTotalPages() {
+        return (int) $this->_raw->Items->TotalPages - 1;
+    }
+    
+    /**
+     *
+     * Get more search results
+     * 
+     * @access public
+     * @return string
+     */
+    public function getMoreSearchResults() {
+        return (string) $this->_raw->Items->MoreSearchResultsUrl;
+    }
+    
+    /**
+     *
      * Get operation headers data
      * 
      * @access public
