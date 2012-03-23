@@ -15,6 +15,7 @@ use AmazonProductAdvertising\Amazon\Request\Base as Amazon_Request_Base;
  * @subpackage Request  
  * @name Lookup
  * @version 1.0
+ * @license BSD-3-Clause(http://www.opensource.org/licenses/BSD-3-Clause)
  * @final
  */
 final class Lookup extends Amazon_Request_Base {

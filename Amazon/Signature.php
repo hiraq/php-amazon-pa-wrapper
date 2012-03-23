@@ -19,6 +19,7 @@ use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
  * @subpackage Amazon
  * @name Signature
  * @version 1.0
+ * @license BSD-3-Clause(http://www.opensource.org/licenses/BSD-3-Clause)
  * @final 
  */
 final class Signature {

@@ -10,6 +10,7 @@ use AmazonProductAdvertising\Amazon\Signature as Amazon_Signature;
  * @subpackage Request  
  * @name Base
  * @version 1.0
+ * @license BSD-3-Clause(http://www.opensource.org/licenses/BSD-3-Clause)
  * @abstract
  */
 abstract class Base {
