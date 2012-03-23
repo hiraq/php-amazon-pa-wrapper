@@ -13,6 +13,13 @@ use AmazonProductAdvertising\Amazon\Request as Amazon_Request;
 use AmazonProductAdvertising\Amazon\Response as Amazon_Response;
 use AmazonProductAdvertising\Amazon\Request\Search as Amazon_Search;
 
+/**
+ * @author Hiraq
+ * @link https://github.com/hiraq/php-amazon-pa-wrapper
+ * @package AmazonProductAdvertising
+ * @version 1.0
+ * @final 
+ */
 final class Amazon {
     /**
      * Amazon Product Advertising API version
@@ -180,18 +187,46 @@ final class Amazon {
         $this->_endpoint_url = $endpoint;
     }
     
+    /**
+     *
+     * Get endpoint url
+     * 
+     * @access public
+     * @return string
+     */
     public function getEndPoint() {
         return $this->_endpoint_url;
     }
     
+    /**
+     *
+     * Get aws key
+     * 
+     * @access public
+     * @return string
+     */
     public function getAwsKey() {
         return $this->_aws_key;
     }
     
+    /**
+     *
+     * Get secret key
+     * 
+     * @access public
+     * @return string
+     */
     public function getSecretKey() {
         return $this->_secret_key;
     }
     
+    /**
+     *
+     * Get associate tag key
+     * 
+     * @access public
+     * @return string
+     */
     public function getTagKey() {
         return $this->_tag_key;
     }

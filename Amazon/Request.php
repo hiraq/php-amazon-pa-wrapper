@@ -11,17 +11,63 @@ use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
 
 final class Request {
     
+    /**
+     *
+     * Amazon_Request object
+     * @staticvar null|object
+     */
     static private $_obj = null;
     
+    /**
+     *
+     * Amazon object
+     * @var object
+     */
     private $_amazon = null;
     
-    private $_operation;    
+    /**
+     *
+     * Operation to proceed
+     * @var string
+     */
+    private $_operation;  
+    
+    /**
+     *
+     * A data if operation is search
+     * @var string
+     */
     private $_keyword;
+    
+    /**
+     *
+     * A data if operation is lookup
+     * @var string
+     */
     private $_asin;
+    
+    /**
+     *
+     * Amazon_Request_Param object
+     * @var object
+     */
     private $_params;
     
+    /**
+     * Denied object instantiation
+     * @access private
+     * @return void 
+     */
     private function __construct() {}
     
+    /**
+     *
+     * Create Amazon_Request object
+     * 
+     * @access public
+     * @return object
+     * @static
+     */
     static public function getInstance() {
         
         if( is_null(self::$_obj) ) {
@@ -32,6 +78,15 @@ final class Request {
         
     }
     
+    /**
+     *
+     * Set Amazon object
+     * 
+     * @access public
+     * @param Amazon $obj
+     * @throws Amazon_Exception 
+     * @return void
+     */
     public function setAmazon(Amazon $obj) {
         
         if( $obj instanceof Amazon) {
@@ -42,6 +97,14 @@ final class Request {
         
     }
     
+    /**
+     *
+     * Set parameters and Amazon_Request_Param object
+     * 
+     * @access public
+     * @param array $params 
+     * @return void
+     */
     public function setParams( $params ) {
         
         $param = Amazon_Request_Param::getInstance();
@@ -86,6 +149,13 @@ final class Request {
         
     }
     
+    /**
+     *
+     * Send request to Amazon server
+     * 
+     * @access public
+     * @throws Amazon_Exception      
+     */
     public function send() {
         
         if( empty($this->_operation) ) {

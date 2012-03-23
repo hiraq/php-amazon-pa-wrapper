@@ -8,13 +8,42 @@ use AmazonProductAdvertising\Amazon\Request\Param as Amazon_Request_Param;
 
 final class Signature {
     
+    /**
+     *
+     * Amazon_Signature object
+     * @staticvar object|null
+     */
     static private $_obj = null;
     
+    /**
+     *
+     * Amazon object
+     * @var object
+     */
     private $_amazon;
+    
+    /**
+     *
+     * Amazon_Request_Param object
+     * @var object
+     */
     private $_param;
     
+    /**
+     * Denied direct object instantiation
+     * @access private 
+     * @return void
+     */
     private function __construct() {}
     
+    /**
+     *
+     * Create object instance
+     * 
+     * @access public
+     * @return object
+     * @static
+     */
     static public function getInstance() {
         
         if( is_null(self::$_obj) ) {
@@ -25,6 +54,15 @@ final class Signature {
         
     }
     
+    /**
+     *
+     * Initialize signature
+     * 
+     * @access public
+     * @param Amazon $amazon
+     * @param Amazon_Request_Param $param
+     * @throws Amazon_Exception 
+     */
     public function init(Amazon $amazon,Amazon_Request_Param $param) {
         
         if( $amazon instanceof Amazon && $param instanceof Amazon_Request_Param ) {            
@@ -36,8 +74,21 @@ final class Signature {
         
     }
     
+    /**
+     *
+     * Create url signature
+     * 
+     * @link http://mierendo.com/software/aws_signed_query/
+     * @access public
+     * @param array $params
+     * @return string
+     * @throws Amazon_Exception 
+     */
     public function create( $params ) {      
         
+        /*
+         * manage all parameters
+         */
         $this->_param->setParams(array(
             'AWSAccessKeyId' => $this->_amazon->getAwsKey(),            
             'AssociateTag' => $this->_amazon->getTagKey(),
@@ -64,6 +115,9 @@ final class Signature {
             
             ksort($params);
             
+            /*
+             * create query
+             */
             $canonicalized_query = array();
             foreach ($params as $param => $value)
             {
@@ -74,9 +128,11 @@ final class Signature {
             $canonicalized_query = implode("&", $canonicalized_query);
             $string_to_sign = $method."\n".$host."\n".$uri."\n".$canonicalized_query;
             
+            //create signature
             $signature = base64_encode(hash_hmac("sha256", $string_to_sign, $private_key, true));
             $signature = str_replace("%7E", "~", rawurlencode($signature));
             
+            //create url request
             $request = $parse_url['scheme'].'://'.$host.$uri.'?'.$canonicalized_query.'&Signature='.$signature;
             return $request;
             
